@@ -19,8 +19,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
  */
 public class Robot extends TimedRobot {
   private final CommandXboxController xbox = new CommandXboxController(0);
-  private final TalonSRX rightCtrl = new TalonSRX(0);
-  private final TalonSRX leftCtrl = new TalonSRX(0);
+  private final TalonSRX rightCtrl = new TalonSRX(8);
+  private final TalonSRX leftCtrl = new TalonSRX(5);
   
   @Override
   public void teleopPeriodic(){
