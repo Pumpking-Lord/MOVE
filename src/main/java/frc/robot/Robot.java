@@ -21,18 +21,18 @@ public class Robot extends TimedRobot {
   private final CommandXboxController xbox = new CommandXboxController(0);
   private final TalonSRX rightCtrl = new TalonSRX(8);
   private final TalonSRX leftCtrl = new TalonSRX(5);
-  
+  private final double speedCtrl = 0.2;
   @Override
   public void teleopPeriodic(){
     if(xbox.getLeftY() != 0){
       //forward and backward
-      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-1);
-      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY());
+      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-speedCtrl);
+      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*speedCtrl);
     }
     else if(xbox.getRightX() != 0){
       //spin left and right
-      leftCtrl.set(ControlMode.PercentOutput, xbox.getRightX());
-      rightCtrl.set(ControlMode.PercentOutput, xbox.getRightX());
+      leftCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
+      rightCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
     }
   }
 }
