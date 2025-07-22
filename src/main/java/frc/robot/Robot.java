@@ -24,12 +24,12 @@ public class Robot extends TimedRobot {
   private final double speedCtrl = 0.2;
   @Override
   public void teleopPeriodic(){
-    if(xbox.getLeftY() != 0){
+    if(xbox.getLeftY() < 0.05 && xbox.getLeftY() > -0.05){
       //forward and backward
-      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-speedCtrl);
-      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*speedCtrl);
+      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*speedCtrl);
+      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-speedCtrl);
     }
-    else if(xbox.getRightX() != 0){
+    else if(xbox.getRightX() < 0.05 && xbox.getRightX() > -0.05){
       //spin left and right
       leftCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
       rightCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
