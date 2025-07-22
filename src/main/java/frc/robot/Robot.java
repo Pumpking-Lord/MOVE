@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private final CommandXboxController xbox = new CommandXboxController(0);
   private final TalonSRX rightCtrl = new TalonSRX(8);
   private final TalonSRX leftCtrl = new TalonSRX(5);
-  private final double speedCtrl = 0.2;
+  private final double speedCtrl = 0.4;
   @Override
   public void teleopPeriodic(){
     if(xbox.getLeftY() > 0.1 || xbox.getLeftY() < -0.1){
