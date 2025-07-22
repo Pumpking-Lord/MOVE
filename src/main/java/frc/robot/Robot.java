@@ -19,18 +19,20 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
  */
 public class Robot extends TimedRobot {
   private final CommandXboxController xbox = new CommandXboxController(0);
-  private final TalonSRX Right = new TalonSRX(0);
-  private final TalonSRX Left = new TalonSRX(0);
-  public void TeleloPeriod(){
+  private final TalonSRX rightCtrl = new TalonSRX(0);
+  private final TalonSRX leftCtrl = new TalonSRX(0);
+  
+  @Override
+  public void teleopPeriodic(){
     if(xbox.getLeftY() != 0){
       //forward and backward
-      Right.set(ControlMode.PercentOutput, xbox.getLeftY()*-1);
-      Left.set(ControlMode.PercentOutput, xbox.getLeftY());
+      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-1);
+      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY());
     }
     else if(xbox.getRightX() != 0){
       //spin left and right
-      Left.set(ControlMode.PercentOutput, xbox.getRightX());
-      Right.set(ControlMode.PercentOutput, xbox.getRightX());
+      leftCtrl.set(ControlMode.PercentOutput, xbox.getRightX());
+      rightCtrl.set(ControlMode.PercentOutput, xbox.getRightX());
     }
   }
 }
