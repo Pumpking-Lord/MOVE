@@ -18,19 +18,19 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
  * the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  CommandXboxController xbox = new CommandXboxController(0);
-  TalonSRX motorRight = new TalonSRX(0);
-  TalonSRX motorLeft = new TalonSRX(0);
+  private final CommandXboxController xbox = new CommandXboxController(0);
+  private final TalonSRX Right = new TalonSRX(0);
+  private final TalonSRX Left = new TalonSRX(0);
   public void TeleloPeriod(){
     if(xbox.getLeftY() != 0){
       //forward and backward
-      motorRight.set(ControlMode.PercentOutput, xbox.getLeftY());
-      motorLeft.set(ControlMode.PercentOutput, xbox.getLeftY());
+      Right.set(ControlMode.PercentOutput, xbox.getLeftY()*-1);
+      Left.set(ControlMode.PercentOutput, xbox.getLeftY());
     }
     else if(xbox.getRightX() != 0){
       //spin left and right
-      motorLeft.set(ControlMode.PercentOutput, xbox.getRightX());
-      motorRight.set(ControlMode.PercentOutput, xbox.getRightX()*-1);
+      Left.set(ControlMode.PercentOutput, xbox.getRightX());
+      Right.set(ControlMode.PercentOutput, xbox.getRightX());
     }
   }
 }
