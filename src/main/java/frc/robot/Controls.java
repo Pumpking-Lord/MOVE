@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -11,17 +13,17 @@ public class Controls extends SubsystemBase{
     private final TalonSRX leftCtrl = new TalonSRX(5);
     private final double speedCtrl = 0.4;
     
-    public Command drive(double spin, double move) {
+    public Command drive(DoubleSupplier spin, DoubleSupplier move) {
         return this.runOnce(() -> {
-            if(move > 0.1 || move < -0.1){
+            if(move.getAsDouble() > 0.1 || move.getAsDouble() < -0.1){
                 //move forward and backwards
-                rightCtrl.set(ControlMode.PercentOutput, move*speedCtrl);
-                leftCtrl.set(ControlMode.PercentOutput, move*-speedCtrl);
+                rightCtrl.set(ControlMode.PercentOutput, move.getAsDouble()*speedCtrl);
+                leftCtrl.set(ControlMode.PercentOutput, move.getAsDouble()*-speedCtrl);
             }
-            else if(spin > 0.1 || spin < -0.1){
+            else if(spin.getAsDouble() > 0.1 || spin.getAsDouble() < -0.1){
                 //spin left and right
-                leftCtrl.set(ControlMode.PercentOutput, spin*speedCtrl);
-                rightCtrl.set(ControlMode.PercentOutput, spin*speedCtrl);
+                leftCtrl.set(ControlMode.PercentOutput, spin.getAsDouble()*speedCtrl);
+                rightCtrl.set(ControlMode.PercentOutput, spin.getAsDouble()*speedCtrl);
             }
         });
     }

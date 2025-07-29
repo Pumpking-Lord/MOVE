@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     //TODO: DEfault command that drives
     DoubleSupplier leftY =() -> xbox.getLeftY();
     DoubleSupplier rightX =() -> xbox.getRightX();
-    controls.setDefaultCommand(controls.drive(rightX.getAsDouble(), leftY.getAsDouble()));
+    controls.setDefaultCommand(controls.drive(rightX, leftY));
   }
 
 
