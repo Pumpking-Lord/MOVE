@@ -9,8 +9,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
@@ -18,21 +24,22 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
  * the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
+  private final CommandScheduler schd = CommandScheduler.getInstance();
   private final CommandXboxController xbox = new CommandXboxController(0);
-  private final TalonSRX rightCtrl = new TalonSRX(8);
-  private final TalonSRX leftCtrl = new TalonSRX(5);
-  private final double speedCtrl = 0.4;
+  final Controls controls = new Controls();
+
+  public Robot() {
+    //TODO: DEfault command that drives
+    DoubleSupplier leftY =() -> xbox.getLeftY();
+    DoubleSupplier rightX =() -> xbox.getRightX();
+    controls.setDefaultCommand(controls.drive(rightX.getAsDouble(), leftY.getAsDouble()));
+  }
+
+
+
+
   @Override
   public void teleopPeriodic(){
-    if(xbox.getLeftY() > 0.1 || xbox.getLeftY() < -0.1){
-      //forward and backward
-      rightCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*speedCtrl);
-      leftCtrl.set(ControlMode.PercentOutput, xbox.getLeftY()*-speedCtrl);
-    }
-    else if(xbox.getRightX() > 0.1 || xbox.getRightX() < -0.1){
-      //spin left and right
-      leftCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
-      rightCtrl.set(ControlMode.PercentOutput, xbox.getRightX()*speedCtrl);
-    }
+    schd.run();
   }
 }
